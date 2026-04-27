@@ -111,3 +111,10 @@ export const GetDomainRelationshipArgsSchema = z.object({
     .describe("Domain name to analyze"),
   relationship: z.enum(DomainRelationships).describe("Type of relationship to query"),
 }).merge(PaginationSchema);
+
+export const GetThreatActorFilesArgsSchema = z.object({
+  threat_actor_id: z
+    .string()
+    .min(1)
+    .describe("VirusTotal threat actor ID/slug (e.g. 'lazarus-group', 'apt28'). Use the lowercase hyphenated form as it appears in VirusTotal."),
+}).merge(PaginationSchema);

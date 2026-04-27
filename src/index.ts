@@ -11,6 +11,7 @@ import {
   GetIpReportArgsSchema,
   GetIpRelationshipArgsSchema,
   GetDomainReportArgsSchema,
+  GetThreatActorFilesArgsSchema,
 } from './schemas/index.js';
 import {
   handleGetUrlReport,
@@ -20,6 +21,7 @@ import {
   handleGetIpReport,
   handleGetIpRelationship,
   handleGetDomainReport,
+  handleGetThreatActorFiles,
 } from './handlers/index.js';
 
 dotenv.config();
@@ -89,6 +91,13 @@ server.addTool({
   description: "Get a comprehensive domain analysis report including DNS records, WHOIS data, and key relationships (SSL certificates, subdomains, historical data). Optionally specify which relationships to include in the report. Returns both the basic analysis and relationship data.",
   parameters: GetDomainReportArgsSchema,
   execute: async (args) => handleGetDomainReport(args),
+});
+
+server.addTool({
+  name: "get_threat_actor_files",
+  description: "Get file hash IOCs associated with a VirusTotal threat actor. Returns SHA256 hashes and detection stats for files linked to the specified threat actor ID/slug (e.g. 'lazarus-group', 'apt28'). Supports pagination via cursor.",
+  parameters: GetThreatActorFilesArgsSchema,
+  execute: async (args) => handleGetThreatActorFiles(args),
 });
 
 // Handle process events
